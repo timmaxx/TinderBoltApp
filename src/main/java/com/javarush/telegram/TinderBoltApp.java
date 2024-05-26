@@ -23,18 +23,22 @@ public class TinderBoltApp extends MultiSessionTelegramBot {
     @Override
     public void onUpdateEventReceived(Update update) {
         //TODO: основной функционал бота будем писать здесь
-        sendTextMessage("Привет!"); // Обычный
+        String message = getMessageText();
+
+        if (message.equals("/start")) {
+            sendPhotoMessage("main"); // из каталога images
+            String text = loadMessage("main");
+            sendTextMessage(text);
+            return;
+        }
         sendTextMessage("*Привет!*"); // Жирный
         sendTextMessage("_Привет!_"); // Курсив
 
-        String message = getMessageText();
         sendTextMessage("Вы написали: '" + message + "'");
 
         sendTextButtonsMessage("Выберите режим работы:",
                 "Старт", "start",
                 "Стоп", "stop");
-
-        sendPhotoMessage("avatar_main");
     }
 
     public static void main(String[] args) throws TelegramApiException {
